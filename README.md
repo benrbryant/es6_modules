@@ -1,4 +1,4 @@
-# Exercise
+# NPM and ES6 Modules
 
 ## Objective
 
