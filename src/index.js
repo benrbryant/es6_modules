@@ -1,23 +1,45 @@
 import WishList from "./classes/wishlist";
 
-console.log("Working");
-
 let form = document.querySelector("#submitForm");
+let makeInput = document.querySelector("#makeInput");
+let modelInput = document.querySelector("#modelInput");
+let yearInput = document.querySelector("#yearInput");
+let wishlistUl = document.querySelector("#wishListContainer > ul");
 
 let wishlist = new WishList();
 
-form.addEventListener("submit", (event) => {
-  console.log(event);
-  event.preventDefault();
+form.addEventListener("submit", addCar);
 
-  let make = event.target[0].value;
-  let model = event.target[1].value;
-  let year = event.target[2].value;
+document.querySelector(".removeBtn").addEventListener("click", removeCar);
+
+function updateDOMList() {
+  wishlistUl.innerHTML = "";
+  wishlist.list.forEach((car) => {
+    const li = document.createElement("li");
+    li.textContent = `${car.make} ${car.model}`;
+    li.addEventListener("click", () => showCarDetails(car))
+    wishlistUl.appendChild(li);
+  })
+}
+
+function showCarDetails(car) {
+  // todo
+}
+
+function addCar(event) {
+    event.preventDefault();
+
+  let make = makeInput.value;
+  let model = modelInput.value;
+  let year = yearInput.value;
 
   wishlist.add(make, model, year);
-});
+  
+  updateDOMList();
+}
 
-document.querySelector(".removeBtn").addEventListener("click", (event) => {
-  let carId = event.target.parentElement.getAttribute("data-carId");
-  wishlist.remove(carId);
-});
+function removeCar(carId) {
+   wishlist.remove(carId);
+  
+   updateDOMList();
+}
